@@ -75,6 +75,26 @@ namespace robot{
                 string y = this.ypos.ToString();
                 return "("+x+","+y+") facing "+this.heading;
             }
+
+            public bool BeenPlaced(){
+                return (this.xpos != -1 && this.ypos != -1);
+            }
+
+            public bool IsValid(int x, int y){
+                if(x<5 && y<5 && x>-1 && y>-1) return true;
+                else{
+                    Console.WriteLine("Saving the Robot from destruction...");
+                    return false;
+                }
+            }
+
+            public void SetHead(string s){
+                string[] headings = new string[] {"NORTH", "EAST", "SOUTH", "WEST"};
+                int indx = Array.IndexOf(headings,this.heading);
+                if(s=="LEFT") indx = (indx+3)%4;
+                else indx = (indx+1)%4;
+                this.heading = headings[indx];
+            }
         }
 
 
