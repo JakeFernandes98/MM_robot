@@ -27,6 +27,7 @@ namespace robot{
                 string formatted_line = line.Substring(6);
                 string[] arguements = formatted_line.Split(',');
                 rbt = new Robot(Int32.Parse(arguements[0]),Int32.Parse(arguements[1]),arguements[2]);
+                Console.WriteLine(arguements[0]+","+arguements[1]+","+arguements[2]);
                 return rbt;
             }else{
                 if(!rbt.BeenPlaced()){
