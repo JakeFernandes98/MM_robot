@@ -35,7 +35,7 @@ namespace robot{
                 }
                 switch(line){
                     case "MOVE":
-                        //todo
+                        rbt.Move();
                         return rbt;
                     case "LEFT":
                     case "RIGHT":
@@ -102,6 +102,33 @@ namespace robot{
                 if(s=="LEFT") indx = (indx+3)%4;
                 else indx = (indx+1)%4;
                 this.heading = headings[indx];
+            }
+
+            public bool Move(){
+                int tempx = this.xpos;
+                int tempy = this.ypos;
+                switch(this.heading){
+                    case "NORTH":
+                        tempy = this.ypos+1;
+                        break;
+                    case "EAST":
+                        tempx = this.xpos+1;
+                        break;
+                    case "WEST":
+                        tempx = this.xpos-1;
+                        break;
+                    case "SOUTH":
+                        tempy = this.ypos-1;
+                        break;
+                    default:
+                        return false;
+                }
+                if(IsValid(tempx,tempy)){
+                    this.xpos = tempx;
+                    this.ypos = tempy;
+                    return true;
+                }
+                return false;
             }
         }
 
