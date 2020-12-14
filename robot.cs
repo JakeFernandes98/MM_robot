@@ -44,6 +44,26 @@ namespace robot{
             }
         }
 
+        public class Robot{
+            int xpos;
+            int ypos;
+            string heading;
+
+            public Robot(){
+                this.xpos = -1;
+                this.ypos = -1;
+                this.heading = "NONE";
+            }
+
+            public Robot(int x, int y, string heading){
+                this.xpos = x;
+                this.ypos = y;
+                this.heading = heading;
+                Console.WriteLine("Placing Robot");
+            }
+        }    
+
+
     }
 
 }
