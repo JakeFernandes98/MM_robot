@@ -22,7 +22,10 @@ namespace robot{
 
         static Robot process(Robot rbt, string line){
             /*
-            params: Robot, Command to process
+            params: Robot, String - command to process
+            returns: Robot - updated object
+            checks the contents of the string and changes the robot object using
+            the appropriate robot object method
             */
             if(line.Contains("PLACE")){
                 //get the arguements from the place command
@@ -63,7 +66,9 @@ namespace robot{
             constructors:
                 empty - places the robot outside of the board. Used in order to
                         create the initial object for use with static methods.
-                parameters - used when PLACE command is issued.
+                parameters - used when PLACE command is issued. If parameters
+                        would result in robot being placed outside of board, it 
+                        is placed at the origin facing north instead.
             */
             int xpos;
             int ypos;
@@ -76,10 +81,16 @@ namespace robot{
             }
 
             public Robot(int x, int y, string heading){
-                this.xpos = x;
-                this.ypos = y;
-                this.heading = heading;
-                Console.WriteLine("Placing Robot");
+                if(IsValid(x,y)){
+                    this.xpos = x;
+                    this.ypos = y;
+                    this.heading = heading;
+                }else{
+                    this.xpos = 0;
+                    this.ypos = 0;
+                    this.heading = "NORTH";
+                }
+                Console.WriteLine("Placing Robot: "+GetInfo());
             }
 
             public int[] GetCoords(){
@@ -128,6 +139,7 @@ namespace robot{
 
             public void SetHead(string s){
             /*
+            params: string - rotation
             changes the heading of the robot by using modular arithmetic. An
             array is created which contains the headings in clockwise order.
             If the robot turns left then it is moving anticlockwise (so must subtract
@@ -142,6 +154,7 @@ namespace robot{
 
             public bool Move(){
             /*
+            returns: boolean - whether movement was successful
             calculates the theoretical position of the robot if it was to move,
             which are then checked. If it is within the board then the robot will
             be moved, otherwise the robot will remain still
