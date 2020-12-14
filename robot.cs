@@ -9,37 +9,43 @@ namespace robot{
                 Console.WriteLine("Please pass the file with commands as an arguement");
             }else{
                 //reading file line by line
+                Robot rb = new Robot();
                 using (StreamReader reader = File.OpenText(args[0])){
                     string line;
                     while ((line = reader.ReadLine()) != null){
-                        if(!process(line)) Console.WriteLine("Invalid Command: "+line);
+                        rb = process(rb,line);
                     }
                 }
             }
 
         }
 
-        static bool process(string line){
+        static Robot process(Robot rbt, string line){
             //checking each possible command
             if(line.Contains("PLACE")){
                 //get the arguements from the place command
                 string formatted_line = line.Substring(6);
                 string[] arguements = formatted_line.Split(',');
-                return true;
+                rbt = new Robot(Int32.Parse(arguements[0]),Int32.Parse(arguements[1]),arguements[2]);
+                return rbt;
             }else{
+                if(!rbt.BeenPlaced()){
+                    return rbt;
+                }
                 switch(line){
                     case "MOVE":
-                        return true;
+                        //todo
+                        return rbt;
                     case "LEFT":
                     case "RIGHT":
-                        //LEFT and RIGHT will likely use the same method
-                        return true;
+                        rbt.SetHead(line);
+                        return rbt;
                     case "REPORT":
-                        Console.WriteLine("reporting");
-                        return true;
+                        Console.WriteLine(rbt.GetInfo());
+                        return rbt;
                     default:
                         Console.WriteLine("Invalid Command");
-                        return false;
+                        return rbt;
                 }
             }
         }
@@ -71,6 +77,7 @@ namespace robot{
             }
 
             public string GetInfo(){
+                if(!BeenPlaced()) return "Robot has not been placed";
                 string x = this.xpos.ToString();
                 string y = this.ypos.ToString();
                 return "("+x+","+y+") facing "+this.heading;
