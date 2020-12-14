@@ -61,7 +61,21 @@ namespace robot{
                 this.heading = heading;
                 Console.WriteLine("Placing Robot");
             }
-        }    
+
+            public int[] GetCoords(){
+                return new int[] {this.xpos,this.ypos};
+            }
+
+            public string GetHeading(){
+                return this.heading;
+            }
+
+            public string GetInfo(){
+                string x = this.xpos.ToString();
+                string y = this.ypos.ToString();
+                return "("+x+","+y+") facing "+this.heading;
+            }
+        }
 
 
     }
