@@ -3,6 +3,7 @@ using System.IO;
 
 namespace robot{
     class Program{
+        public const int BOARD_SIZE = 12;
         static void Main(string[] args){
             //Checking whether the File given exists
             if(!File.Exists(args[0])){
@@ -67,7 +68,7 @@ namespace robot{
                 empty - places the robot outside of the board. Used in order to
                         create the initial object for use with static methods.
                 parameters - used when PLACE command is issued. If parameters
-                        would result in robot being placed outside of board, it 
+                        would result in robot being placed outside of board, it
                         is placed at the origin facing north instead.
             */
             int xpos;
@@ -130,7 +131,7 @@ namespace robot{
             returns: boolean - whether coords are in the board
             checks whether the coordinated given are within the board size
             */
-                if(x<5 && y<5 && x>-1 && y>-1) return true;
+                if(x<BOARD_SIZE && y<BOARD_SIZE && x>-1 && y>-1) return true;
                 else{
                     Console.WriteLine("Saving the Robot from destruction...");
                     return false;
