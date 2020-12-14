@@ -21,13 +21,14 @@ namespace robot{
         }
 
         static Robot process(Robot rbt, string line){
-            //checking each possible command
+            /*
+            params: Robot, Command to process
+            */
             if(line.Contains("PLACE")){
                 //get the arguements from the place command
                 string formatted_line = line.Substring(6);
                 string[] arguements = formatted_line.Split(',');
                 rbt = new Robot(Int32.Parse(arguements[0]),Int32.Parse(arguements[1]),arguements[2]);
-                Console.WriteLine(arguements[0]+","+arguements[1]+","+arguements[2]);
                 return rbt;
             }else{
                 if(!rbt.BeenPlaced()){
@@ -52,6 +53,18 @@ namespace robot{
         }
 
         public class Robot{
+            /*
+            class Robot:
+            attributes:
+                xpos - the x position of the Robot
+                ypos - the y position of the Robot
+                heading - the direction the robot is facing. Valid valued: NORTH,
+                            EAST,SOUTH,WEST,NONE
+            constructors:
+                empty - places the robot outside of the board. Used in order to
+                        create the initial object for use with static methods.
+                parameters - used when PLACE command is issued.
+            */
             int xpos;
             int ypos;
             string heading;
@@ -70,14 +83,22 @@ namespace robot{
             }
 
             public int[] GetCoords(){
+            /*
+            returns: int array - the x and y position of the Robot
+            1st element is the x position and the 2nd is the y.
+            */
                 return new int[] {this.xpos,this.ypos};
             }
 
             public string GetHeading(){
+            //returns: string - the heading of the Robot
                 return this.heading;
             }
 
             public string GetInfo(){
+            /*
+            returns: formatted string containing position and heading of robot
+            */
                 if(!BeenPlaced()) return "Robot has not been placed";
                 string x = this.xpos.ToString();
                 string y = this.ypos.ToString();
@@ -85,10 +106,19 @@ namespace robot{
             }
 
             public bool BeenPlaced(){
+            /*
+            returns: boolean - whether robot has been placed
+            checks whether robot has been placed based on logic of empty constructor
+            */
                 return (this.xpos != -1 && this.ypos != -1);
             }
 
             public bool IsValid(int x, int y){
+            /*
+            params: x and y coordinates
+            returns: boolean - whether coords are in the board
+            checks whether the coordinated given are within the board size
+            */
                 if(x<5 && y<5 && x>-1 && y>-1) return true;
                 else{
                     Console.WriteLine("Saving the Robot from destruction...");
@@ -97,6 +127,12 @@ namespace robot{
             }
 
             public void SetHead(string s){
+            /*
+            changes the heading of the robot by using modular arithmetic. An
+            array is created which contains the headings in clockwise order.
+            If the robot turns left then it is moving anticlockwise (so must subtract
+            from the index of the array). If right then the index must be incremented
+            */
                 string[] headings = new string[] {"NORTH", "EAST", "SOUTH", "WEST"};
                 int indx = Array.IndexOf(headings,this.heading);
                 if(s=="LEFT") indx = (indx+3)%4;
@@ -105,6 +141,11 @@ namespace robot{
             }
 
             public bool Move(){
+            /*
+            calculates the theoretical position of the robot if it was to move,
+            which are then checked. If it is within the board then the robot will
+            be moved, otherwise the robot will remain still
+            */
                 int tempx = this.xpos;
                 int tempy = this.ypos;
                 switch(this.heading){
