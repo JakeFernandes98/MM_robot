@@ -12,15 +12,36 @@ namespace robot{
                 using (StreamReader reader = File.OpenText(args[0])){
                     string line;
                     while ((line = reader.ReadLine()) != null){
-                        process(line);
+                        if(!process(line)) Console.WriteLine("Invalid Command: "+line);
                     }
                 }
             }
 
         }
 
-        static void process(string line){
-            //process command
+        static bool process(string line){
+            //checking each possible command
+            if(line.Contains("PLACE")){
+                //get the arguements from the place command
+                string formatted_line = line.Substring(6);
+                string[] arguements = formatted_line.Split(',');
+                return true;
+            }else{
+                switch(line){
+                    case "MOVE":
+                        return true;
+                    case "LEFT":
+                    case "RIGHT":
+                        //LEFT and RIGHT will likely use the same method
+                        return true;
+                    case "REPORT":
+                        Console.WriteLine("reporting");
+                        return true;
+                    default:
+                        Console.WriteLine("Invalid Command");
+                        return false;
+                }
+            }
         }
 
     }
