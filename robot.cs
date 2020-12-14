@@ -1,0 +1,28 @@
+using System;
+using System.IO;
+
+namespace robot{
+    class Program{
+        static void Main(string[] args){
+            //Checking whether the File given exists
+            if(!File.Exists(args[0])){
+                Console.WriteLine("Please pass the file with commands as an arguement");
+            }else{
+                //reading file line by line
+                using (StreamReader reader = File.OpenText(args[0])){
+                    string line;
+                    while ((line = reader.ReadLine()) != null){
+                        process(line);
+                    }
+                }
+            }
+
+        }
+
+        static void process(string line){
+            //process command
+        }
+
+    }
+
+}
